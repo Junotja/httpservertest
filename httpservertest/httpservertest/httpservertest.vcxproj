@@ -81,6 +81,10 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="httpservertest.h" />
+    <ClInclude Include="Single.h" />
+    <ClInclude Include="ThreadPool.h" />
+    <ClInclude Include="Threads.h" />
+    <ClInclude Include="TimerQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="httpservertest.cpp" />

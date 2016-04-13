@@ -16,11 +16,23 @@ namespace GUARD
 		CRITICAL_SECTION _cs;
 
 	public:
-		Lock();
-		~Lock();
+		Lock()
+		{
+			InitializeCriticalSection(&_cs);
+		}
+		~Lock()
+		{
+			DeleteCriticalSection(&_cs);
+		}
 
-		void lock();
-		void unlock();
+		void lock()
+		{
+			EnterCriticalSection(&_cs);
+		}
+		void unlock()
+		{
+			LeaveCriticalSection(&_cs);
+		}
 	};
 
 	//rw
@@ -111,7 +123,7 @@ namespace GUARD
 	template <typename lock_t>
 	std::shared_ptr<lock_t> LockPool<lock_t>::alloc()
 	{
-
+		return _locklist[(_index++) % _size];
 	}
 
 	template <typename lock_t>

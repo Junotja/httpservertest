@@ -17,5 +17,14 @@ public:
 	NoCopyable();
 };
 
+#define MAX_BUFFER_LEN 4096
+
+enum NETOPERATE
+{
+	ACCEPT_POSTED,
+	SEND_POSTED,
+	RECV_POSTED,
+	NULL_POSTED
+};
 
 #endif
