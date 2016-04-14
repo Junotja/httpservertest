@@ -26,7 +26,7 @@ public:
 		explicit Lock(const ObjectThread& host)
 			:_t(host)
 		{
-			_t._mutex.ock();
+			_t._mutex.lock();
 		}
 
 		~Lock()

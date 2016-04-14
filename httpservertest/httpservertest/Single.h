@@ -3,16 +3,22 @@
 #include <memory>
 #include <new>
 #include <assert.h>
+#include <functional>
 #include "Config.h"
 #include "Threads.h"
 
-
+typedef std::function<void()> atexit_t;
 template <typename T>
 struct CreateUsingNew
 {
-	static std::shared_ptr<T> Create()
+	static T* Create()
 	{
-		return std::make_shared<T>();
+		return new T;
+	}
+
+	static void Destroy(T* p)
+	{
+		delete p;
 	}
 };
 
@@ -40,7 +46,15 @@ struct CreateUsingAlloc
 template <typename T>
 struct DefaultLiftTime
 {
+	static void DeadReference()
+	{
+		throw std::logic_error("Dead Reference!");
+	}
 
+	static void ScheduleLifePolicy(atexit_t pfun)
+	{
+		std::atexit(pfun);
+	}
 };
 
 
@@ -67,7 +81,7 @@ protected:
 
 	Singleton();
 
-	typedef typename ThreadPolicy<std::shared_ptr<T>, GUARD::Lock>::VolatileType pInstance;
+	typedef typename ThreadPolicy<std::T*, GUARD::Lock>::VolatileType pInstance;
 	static pInstance _pinstance;
 	static bool _destroyed;
 };
@@ -86,6 +100,54 @@ template <typename T,
 >
 bool Singleton<T, U, X, Y>::_destroyed = false;
 
+template <typename T,
+	template <typename> class CreateUsing,
+	template <typename> class LifeTime,
+	template <typename, typename> class ThreadPolicy
+>
+inline T& Singleton<T, CreateUsing, LifeTime, ThreadPolicy>::Instance()
+{
+	if (!_pinstance)
+	{
+		CreateInstance();
+	}
+	return *_pinstance;
+}
+
+template <typename T,
+	template <typename> class CreateUsing,
+	template <typename> class LifeTime,
+	template <typename, typename> class ThreadPolicy
+>
+void Singleton<T, CreateUsing, LifeTime, ThreadPolicy>::CreateInstance()
+{
+	GUARD::Lock _guard;
+	_guard.lock();
+
+	if (!_pinstance)
+	{
+		if (_destroyed)
+		{
+			_destroyed = false;
+			LifeTime<T>::DeadReference();
+		}
+		_pinstance = CreateUsing<T>::Create();
+		LifeTime<T>::ScheduleLifePolicy(&DestroySingleton);
+	}
+}
+
+template <typename T,
+	template <typename> class CreateUsing,
+	template <typename> class LifeTime,
+	template <typename, typename> class ThreadPolicy
+>
+void Singleton<T, CreateUsing, LifeTime, ThreadPolicy>::DestroySingleton()
+{
+	assert(!_pinstance);
+	CreateUsing<T>::Destroy(_pinstance);
+	_destroyed = true;
+	_pinstance = nullptr;
+}
 
 
 #endif
