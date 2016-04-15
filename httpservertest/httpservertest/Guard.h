@@ -59,7 +59,7 @@ namespace GUARD
 	class LockPool:private NoCopyable
 	{
 	public:
-		typedef vector<std::shared_ptr<lock_t>> lock_type;
+		typedef std::vector<std::shared_ptr<lock_t>> lock_type;
 	private:
 		size_t   _size;
 		//lock_t** _locklist;

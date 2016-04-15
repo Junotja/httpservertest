@@ -1,9 +1,27 @@
-﻿生成启动时间为 2016/4/14 20:07:40。
+﻿生成启动时间为 2016/4/15 19:41:57。
      1>项目“F:\PreviewDemo\test\httpservertest\httpservertest\httpservertest\httpservertest\httpservertest.vcxproj”在节点 2 上(Build 个目标)。
-     1>Link:
-         httpservertest.vcxproj -> F:\PreviewDemo\test\httpservertest\httpservertest\httpservertest\Debug\httpservertest.exe
-     1>已完成生成项目“F:\PreviewDemo\test\httpservertest\httpservertest\httpservertest\httpservertest\httpservertest.vcxproj”(Build 个目标)的操作。
+     1>ClCompile:
+         D:\Software\VisualStudio2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt TimerQueue.cpp httpservertest.cpp
+         httpservertest.cpp
+     1>f:\previewdemo\test\httpservertest\httpservertest\httpservertest\httpservertest\timerqueue.h(22): error C2975: “unnamed-parameter”:“TimerHelper”的模板参数无效，应为编译时常量表达式
+                 f:\previewdemo\test\httpservertest\httpservertest\httpservertest\httpservertest\timerqueue.h(32) : 参见“unnamed-parameter”的声明
+                 f:\previewdemo\test\httpservertest\httpservertest\httpservertest\httpservertest\timerqueue.h(21): 编译类 模板 成员函数“Timer<LARGE_INTEGER>::Timer(T &)”时
+                 with
+                 [
+                     T=LARGE_INTEGER
+                 ]
+                 f:\previewdemo\test\httpservertest\httpservertest\httpservertest\httpservertest\httpservertest.cpp(7): 参见对正在编译的函数 模板 实例化“Timer<LARGE_INTEGER>::Timer(T &)”的引用
+                 with
+                 [
+                     T=LARGE_INTEGER
+                 ]
+                 f:\previewdemo\test\httpservertest\httpservertest\httpservertest\httpservertest\httpservertest.cpp(7): 参见对正在编译的类 模板 实例化“Timer<LARGE_INTEGER>”的引用
+         正在生成代码...
+         正在编译...
+         TimerQueue.cpp
+         正在生成代码...
+     1>已完成生成项目“F:\PreviewDemo\test\httpservertest\httpservertest\httpservertest\httpservertest\httpservertest.vcxproj”(Build 个目标)的操作 - 失败。
 
-生成成功。
+生成失败。
 
-已用时间 00:00:00.76
+已用时间 00:00:01.43
